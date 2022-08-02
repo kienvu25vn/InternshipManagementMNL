@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+
+</head>
+<body>
+<th:block th:include="header"></th:block>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class = "text-center"> Update Internship </h1>
+            <div class = "card-body">
+                <form th:action="@{/internship(id = ${userinternship.userid})}"  th:method="put" th:object="${userinternship}">
+                    <div class ="form-group">
+                        <label> Fullname </label>
+                        <input type = "text" th:field="*{fullname}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}" style="color: red">Username Error</span>
+                    </div>
+                    <div class ="form-group">
+                        <label> Email </label>
+                        <input type = "email" th:field="*{email}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Username Error</span>
+                    </div>
+                    <div class ="form-group">
+                        <label> Phone Number </label>
+                        <input type = "text" th:field="*{phonenumber}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('phonenumber')}" th:errors="*{phonenumber}" style="color: red">Username Error</span>
+                    </div>
+
+
+                    <div class ="form-group">
+                        <label> Indentify Card </label>
+                        <input type = "text" th:field="*{indentify}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('indentify')}" th:errors="*{indentify}" style="color: red">Username Error</span>
+                    </div>
+                    <div class ="form-group">
+                        <label> Level </label>
+                        <input type = "text" th:field="*{level}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('level')}" th:errors="*{level}" style="color: red">Username Error</span>
+                    </div>
+                    <div class ="form-group">
+                        <label> Birthday </label>
+                        <input type = "date" th:name = "bd" class = "form-control" required
+                        />
+                    </div>
+                    <div class ="form-group">
+                        <label> University </label>
+                        <select th:name = "uni">
+                            <th:block th:each="uni : ${universities}">
+                                <option th:value="${uni.name}" th:text="${uni.name}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class ="form-group">
+                        <label> Position </label>
+                        <select th:name = "position">
+                            <th:block th:each="position : ${positions}">
+                                <option th:value="${position.name}" th:text="${position.name}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class = "box-footer">
+                        <button type="submit" class = "btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

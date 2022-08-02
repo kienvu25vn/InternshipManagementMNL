@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <link th:href="@{/internship.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<script>
+    function deleteJs(){
+        if(confirm("Do you want to delete this internship!") == false){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+<th:block th:include="header"></th:block>
+
+<div class ="container">
+    <div class = "row">
+        <h1> List Internships! </h1>
+    </div>
+
+    <div class = "row">
+        <div class = "col-lg-3" th:if="${role == 'ADMIN'}">
+            <a th:href = "@{/internship/new}" class = "btn btn-primary btn-sm mb-3"> Add Internship</a>
+        </div>
+    </div>
+    <form th:action="@{/templates/Internship}" th:method="get">
+        <div class="row">
+            <div class ="col-lg-2">
+                <input type = "text" name = "search" th:value="${search}" class = "form-control" placeholder="Search Internship!"
+                />
+                <div>
+                    <th:block th:if="${search != null and search != ''}">
+                        <span th:text="'Search for: ' + ${search}" ></span>
+                    </th:block>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+            <div class ="col-lg-1">
+                <select  th:name="orderby" style="width: 100% ; height: 100% ; border: 1px solid black;">
+                    <option th:value="id" ></option>
+                    <th:block th:if="${orderby == 'fullname'}">
+                        <option th:value="fullname" selected>Name</option>
+                    </th:block>
+                    <th:block th:if="${orderby != 'fullname'}">
+                        <option th:value="fullname" >Name</option>
+                    </th:block>
+                    <th:block th:if="${orderby == 'email'}">
+                        <option th:value="email" selected>Email</option>
+                    </th:block>
+                    <th:block th:if="${orderby != 'email'}">
+                        <option th:value="email" >Email</option>
+                    </th:block>
+
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <input type="submit" value="Sort" class="btn btn-primary">
+            </div>
+
+        </div>
+
+    </form>
+
+    <br>
+
+    <table class = "table table-striped table-bordered">
+        <thead class = "table-dark">
+        <tr>
+            <th> Photo</th>
+            <th> Full Name</th>
+            <th> Birthday</th>
+            <th> Identify Card</th>
+            <th> Email</th>
+            <th> Phone Number </th>
+            <th> University</th>
+            <th> Position </th>
+            <th> Level </th>
+            <th th:if="${role == 'ADMIN'}"> Actions </th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "data : ${map}">
+            <td>
+                <th:block th:if="${data.value.photosImagePath == null}">
+                    <a th:href="@{/internship/profile(id = ${data.key.userid})}"><img src="https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg" alt="profile image" class="rounded-circle" width="100"></a>
+                </th:block>
+                <th:block th:if="${data.value.photosImagePath}">
+                    <a th:href="@{/internship/profile(id = ${data.key.userid})}"><img th:src="@{${data.value.photosImagePath}}" alt="profile image" class="rounded-circle" width="100"></a>
+                </th:block></td>
+            <td th:text = "${data.value.fullname}"></td>
+            <td th:text="${#dates.format(data.key.birthday, 'dd-MM-yyyy')}"></td>
+            <td th:text = "${data.key.indentify}"></td>
+            <td th:text = "${data.value.email}"></td>
+            <td th:text = "${data.value.phonenumber}"></td>
+            <td th:text = "${data.key.university.name}"></td>
+            <td>
+                <th:block th:each="position : ${data.value.positions}">
+                    <span th:text="${position.name}"></span>
+                </th:block>
+            </td>
+            <td th:text = "${data.key.level}"></td>
+            <td th:if="${role == 'ADMIN'}">
+                <a th:href = "@{timesheet(id = ${data.value.id})}"
+                   class = "btn btn-success">Timesheet</a>
+
+                <a th:href = "@{/update(id = ${data.value.id})}"
+                   class = "btn btn-primary">Update</a>
+
+                <form th:action="@{/internship(id = ${data.value.id})}" th:method="delete" onsubmit="return deleteJs()">
+                   <input type="submit" value="Delete" class = "btn btn-danger">
+                </form>
+
+
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <div class="clearfix">
+        <div class="hint-text">Showing <b th:text="${numOfShow}"></b> out of <b th:text="${numOfInternships}"></b> entries</div>
+        <ul class="pagination" th:each="page : ${pages}">
+            <!--          <li class="page-item disabled"><a href="#">Previous</a></li>-->
+            <th:block th:if="${search == null}">
+                <th:block th:if="${page == pageIndex}">
+                    <li class="page-item active"><a th:href="@{/internship(page = ${page -1})}" class="page-link" th:utext="${page}"></a></li>
+                </th:block>
+                <th:block th:if="${page != pageIndex}">
+                    <li class="page-item"><a th:href="@{/internship(page = ${page - 1})}" class="page-link" th:utext="${page}"></a></li>
+                </th:block>
+            </th:block>
+            <th:block th:if="${search != null}">
+                <th:block th:if="${page == pageIndex}">
+                    <li class="page-item active"><a th:href="@{/templates/Internship(page = ${page -1} , search = ${search} , orderby = ${orderby})}" class="page-link" th:utext="${page}"></a></li>
+                </th:block>
+                <th:block th:if="${page != pageIndex}">
+                    <li class="page-item"><a th:href="@{/templates/Internship(page = ${page -1} , search = ${search} , orderby = ${orderby})}" class="page-link" th:utext="${page}"></a></li>
+                </th:block>
+            </th:block>
+
+
+            <!--          <li class="page-item"><a href="#" class="page-link">Next</a></li>-->
+        </ul>
+    </div>
+</div>
+</body>
+</html>

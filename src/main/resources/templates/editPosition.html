@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+
+</head>
+<body>
+<th:block th:include="header"></th:block>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class = "text-center"> Update Position </h1>
+            <div class = "card-body">
+                <form th:action="@{/position(id = ${position.id})}"  th:method="put" th:object="${position}">
+
+                    <div class ="form-group">
+                        <label> Name </label>
+                        <input type = "text" th:field="*{name}" class = "form-control"
+                        />
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red" >name Error</span>
+                    </div>
+                    <div class = "box-footer">
+                        <button type="submit" class = "btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

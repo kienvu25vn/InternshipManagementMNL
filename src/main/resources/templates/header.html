@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/internship.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" th:fragment="header">
+    <!-- Brand -->
+    <!-- <a class="navbar-brand" href="#">Student Management System</a> -->
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div>
+        <span style="font-size: 20px; color:aqua" ><a th:href="@{/home}">Home</a></span>
+    </div>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav" style="cursor: pointer;">
+
+            <li class="nav-item" th:if="${role == 'ADMIN' or role == 'MENTOR'}">
+                <a class="nav-link " th:href="@{/internship}" th:if="${link != 'internship manage'}">Intership Management</a>
+                <a class="nav-link active" th:href="@{/internship}" th:if="${link == 'internship manage'}">Intership Management</a>
+            </li>
+            <li class="nav-item" th:if="${role == 'ADMIN'}">
+                <a class="nav-link" th:href="@{/mentor}" th:if="${link != 'mentor manage'}">Mentor Management</a>
+                <a class="nav-link active" th:href="@{/mentor}" th:if="${link == 'mentor manage'}">Mentor Management</a>
+            </li>
+            <li class="nav-item"  th:if="${role == 'ADMIN'}">
+                <a class="nav-link" th:href="@{/position}" th:if="${link != 'position manage'}">Position Management</a>
+                <a class="nav-link active" th:href="@{/position}" th:if="${link == 'position manage'}">Position Management</a>
+            </li>
+            <li class="nav-item"  th:if="${role == 'ADMIN'}">
+                <a class="nav-link" th:href="@{/university}" th:if="${link != 'university manage'}">University Management</a>
+                <a class="nav-link active" th:href="@{/university}" th:if="${link == 'university manage'}">University Management</a>
+            </li>
+            <li class="nav-item"  th:if="${role == 'INTERNSHIP'}">
+                <a class="nav-link" th:href="@{/timesheet}" th:if="${link != 'timesheet manage'}">Timesheet Management</a>
+                <a class="nav-link active" th:href="@{/timesheet}" th:if="${link == 'timesheet manage'}">Timesheet Management</a>
+            </li>
+
+        </ul>
+    </div>
+    <div>
+        <th:block th:if="${photo == null}">
+            <a th:href="@{/profile}"><img src="https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg" alt="profile image" class="rounded-circle" width="30"></a>
+        </th:block>
+        <th:block th:if="${photo}">
+            <a th:href="@{/profile}"><img th:src="@{${photo}}" alt="profile image" class="rounded-circle" width="30"></a>
+        </th:block>     </div>
+    <div>
+        <a th:href="@{/logout}" class="nav-link" style=" cursor: pointer">Logout</a>
+    </div>
+</nav>
+</body>
+</html>
