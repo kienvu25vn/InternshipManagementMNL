@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <title>Student Management System</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -11,53 +12,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
-    <!-- <a class="navbar-brand" href="#">Student Management System</a> -->
-
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div>
-        <span style="font-size: 20px; color:aqua" ><a th:href="@{/home}">Home</a></span>
-    </div>
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav" style="cursor: pointer;">
-
-            <li class="nav-item">
-                <a class="nav-link active" th:href="@{/internship}">Intership Management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/mentor}">Mentor Management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/position}">Position Management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/companycard}">CompanyCard Management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/university}">University Management</a>
-            </li>
-
-
-            <!-- <li>
-                <a class="nav-link" >Login</a>
-              </li> -->
-
-
-        </ul>
-    </div>
-    <div>
-        <span th:text ="${'Welcome ' + #authentication.getPrincipal().getUsername() + '!'}" style="color: aliceblue"></span>
-    </div>
-    <div>
-        <a th:href="@{/logout}" class="nav-link" style=" cursor: pointer">Logout</a>
-    </div>
-</nav>
+<th:block th:include="profile/header"></th:block>
 <br>
 <br>
 <div class = "container">
@@ -65,13 +20,13 @@
         <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
             <h1 class = "text-center"> Create New Internship </h1>
             <div class = "card-body">
-                <form th:action="@{/internship}"  method="POST" th:object="${userinternship}">
+                <form th:action="@{/templates/Internship}" method="POST" th:object="${userinternship}">
 
                         <div class ="form-group">
                             <label> Username </label>
                             <input type = "text" th:field="*{username}" class = "form-control"
                             />
-                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">Username Error</span>
+                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red" >Username Error</span>
                         </div>
                         <div class ="form-group">
                             <label> Password </label>
