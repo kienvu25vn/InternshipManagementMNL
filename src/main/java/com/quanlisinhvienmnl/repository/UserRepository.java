@@ -12,12 +12,11 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
     Page<Users> findAllByRoleAndDelAndAndFullnameContainsIgnoreCase(String role , boolean del , String fullname , Pageable pageable);
 
-    Page<Users> findAllByRoleAndDel(String role , boolean del , Pageable pageable);
     List<Users> findAllByRoleAndDelAndAndFullnameContainsIgnoreCase(String role , boolean del , String fullname);
 
     List<Users> findAllByRole(String role);
 
     List<Users> findAllByRoleAndDel(String role , boolean del);
 
-    List<Users> findAllByDel(boolean delFlg);
+    Users findByEmail(String email);
 }

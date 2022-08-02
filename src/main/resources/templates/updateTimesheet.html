@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <meta http-equiv="refresh" content="5;url=http://localhost:8080/timesheet/" th:if="${message != null and internship == null}">
+
+</head>
+<body>
+<th:block th:include="header"></th:block>
+<br>
+<br>
+<div class = "container">
+    <div class = "row">
+        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class = "text-center"> Update Timesheet </h1>
+            <!--            <span th:text="${message}" th:if="${message != null}"></span>-->
+<!--            <span th:text="${'Week from: ' + #dates.format(dayStart , 'yyyy-MM-dd') + ' to ' + #dates.format(dayEnd , 'yyyy-MM-dd')}" style="text-align: center"></span>-->
+            <span th:text="${'Internship: ' + internship.fullname}" style="text-align: center" ></span>
+            <div class = "card-body">
+
+
+                <table class = "table table-striped table-bordered">
+                    <thead class = "table-dark">
+                    <tr>
+                        <th> Date</th>
+                        <th> Day</th>
+                        <th> Time</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <form th:action="@{/templates/timesheet(id = ${internship.id} ,workDate = ${#dates.format(timesheet.workingDay , 'yyyy-MM-dd')})}" th:method="put" >
+                            <td th:text="${#dates.format(timesheet.workingDay , 'yyyy-MM-dd')}">
+                            </td>
+                            <td th:text="${#dates.dayOfWeekName(timesheet.workingDay)}"></td>
+                            <td>
+                                <select th:name="workTime">
+                                    <option th:value="morning" selected  th:if="${timesheet.time == 'morning'}">Morning</option>
+                                    <option th:value="morning"  th:if="${timesheet.time != 'morning'}">Morning</option>
+                                    <option th:value="afternoon" selected th:if="${timesheet.time == 'afternoon'}">Afternoon</option>
+                                    <option th:value="afternoon"  th:if="${timesheet.time != 'afternoon'}">Afternoon</option>
+                                    <option th:value="fulltime" selected th:if="${timesheet.time == 'fulltime'}"> Fulltime</option>
+                                    <option th:value="fulltime"  th:if="${timesheet.time != 'fulltime' }"> Fulltime</option>
+<!--                                    <option th:value="morning"  th:if="${timesheet.time == 'morning' ? selected : '' }"> Morning</option>-->
+<!--                                    <option th:value="afternoon"  th:if="${timesheet.time == 'afternoon' ? selected : '' }"> Afternoon</option>-->
+<!--                                    <option th:value="fulltime"  th:if="${timesheet.time == 'fulltime' ? selected : '' }"> Fulltime</option>-->
+                                </select>
+                            </td>
+                            <td >
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

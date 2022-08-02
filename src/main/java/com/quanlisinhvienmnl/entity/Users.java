@@ -1,5 +1,6 @@
 package com.quanlisinhvienmnl.entity;
 
+import com.quanlisinhvienmnl.validation.EmailExisted;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,7 +22,6 @@ public class Users extends Base{
     private String password;
 
     @Column(name = "email")
-    @Email
     private String email;
 
     @Column(name = "fullname")
@@ -35,10 +35,20 @@ public class Users extends Base{
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "photos" , nullable = true , length = 255)
+    private String photos;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_position" , joinColumns = @JoinColumn(name = "user_id"),
                                         inverseJoinColumns = @JoinColumn(name = "position_id"))
     private List<Position> positions = new ArrayList<>();
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+        return "/user-photos/" + id + "/" + photos;
+    }
+
 
 
 

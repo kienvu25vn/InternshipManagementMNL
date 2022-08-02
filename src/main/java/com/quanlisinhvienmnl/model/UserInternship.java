@@ -1,5 +1,7 @@
-package com.quanlisinhvienmnl.entity;
+package com.quanlisinhvienmnl.model;
 
+import com.quanlisinhvienmnl.entity.Internship;
+import com.quanlisinhvienmnl.entity.Users;
 import com.quanlisinhvienmnl.validation.EmailExisted;
 import com.quanlisinhvienmnl.validation.UsernameExisted;
 import lombok.Data;

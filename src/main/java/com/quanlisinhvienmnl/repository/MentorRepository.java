@@ -14,4 +14,6 @@ public interface MentorRepository extends JpaRepository<Mentor , Long> {
     List<Mentor> findAllByMaxInternshipGreaterThanAndDel(int maxInternship , boolean del);
 
 
+
+
 }

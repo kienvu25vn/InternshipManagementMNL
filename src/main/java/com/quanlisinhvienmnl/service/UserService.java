@@ -17,4 +17,6 @@ public interface UserService {
     List<Users> findByRoleAndDelFlg(String role , boolean del);
     Users findByUsername(String username);
     void deleteById(Long id);
+
+    Users findByEmail(String email);
 }

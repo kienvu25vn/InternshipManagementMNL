@@ -24,6 +24,7 @@ public class Mentor extends Base{
     @ManyToMany(mappedBy = "mentors")
     private List<Internship> internships = new ArrayList<>();
 
+
     @Override
     public String toString() {
         return "Mentor{" +

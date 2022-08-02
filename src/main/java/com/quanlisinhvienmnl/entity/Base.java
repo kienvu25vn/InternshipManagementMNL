@@ -17,7 +17,7 @@ public abstract class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @Column(name  = "created_at")
     @CreatedDate

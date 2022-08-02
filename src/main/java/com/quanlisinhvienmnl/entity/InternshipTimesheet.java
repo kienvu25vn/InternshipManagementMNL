@@ -11,16 +11,37 @@ import java.util.Date;
 public class InternshipTimesheet extends Base{
 
     @Column(name = "working_day")
-    private Date working_day;
+    private Date workingDay;
 
     @Column(name = "time")
     private String time;
 
     @Column(name = "is_del_flg")
-    private boolean is_del_flg;
+    private boolean del;
+
+    @Column(name =  "total_hours")
+    private Integer totalHours;
 
     @OneToOne
     @JoinColumn(name = "internship_id")
     private Internship internship;
 
+    public InternshipTimesheet(){
+
+    }
+    public InternshipTimesheet(Date workingDay , Integer totalHours){
+        this.workingDay = workingDay;
+        this.totalHours = totalHours;
+    }
+
+    @Override
+    public String toString() {
+        return "InternshipTimesheet{" +
+                "workingDay=" + workingDay +
+                ", time='" + time + '\'' +
+                ", del=" + del +
+                ", totalHours=" + totalHours +
+                ", internship=" + internship +
+                '}';
+    }
 }

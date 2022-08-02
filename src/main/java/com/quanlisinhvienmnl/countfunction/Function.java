@@ -1,17 +1,24 @@
 package com.quanlisinhvienmnl.countfunction;
 
+import com.quanlisinhvienmnl.entity.Users;
+import com.quanlisinhvienmnl.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class Function {
+
+
+
     public  Integer numOfpages(int total , int size){
         int numOfPages = 0;
         if(total % size == 0)
@@ -48,7 +55,7 @@ public class Function {
         return pageable;
     }
 
-    public boolean check_role(String role){
+    public static boolean check_role(String role){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Collection<GrantedAuthority> roles = user.getAuthorities();
         for(GrantedAuthority grantedAuthority : roles){
@@ -59,4 +66,18 @@ public class Function {
         }
         return false;
     }
+    public static void role(Model model , UserService userService){
+        if(check_role("ROLE_ADMIN"))
+            model.addAttribute("role" , "ADMIN");
+        else if(check_role("ROLE_INTERNSHIP"))
+            model.addAttribute("role" , "INTERNSHIP");
+        else if (check_role("ROLE_MENTOR")) {
+            model.addAttribute("role" , "MENTOR");
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("photo", userService.findByUsername(user.getUsername()).getPhotosImagePath());
+    }
+
+
+
 }
